@@ -1,0 +1,103 @@
+--PNMX--
+02.02.2022. Nace para atender tiendas modulo en la multitienda mexicana:  El Palacio de Hierro:  https://www.elpalaciodehierro.com/
+
+02.02.2022. Elimina la venta directa del menú: menu.venta.directa
+            menu_principal.jsp
+            agente x vendedor
+            versión: PNMX.v.1.1 
+            
+08.02.2022   Cambio solicitado por Melquisedeth SOTO 
+
+clase:  Constantes.java
+
+	/*** DIR_SIGNATURE_TRASLADO EN PRODUCCION ***/
+	//public static final String STRING_URL_SIGNATURE_TRASLADO = "http://10.216.4.9/PDF/";
+	
+	/*** DIR_SIGNATURE_TRASLADO EN QA - Cambio de ruta para archivos de encargo PDH Melquisedeth SOTO melquisedeth.soto@vision.cr Mar 08/02/2022 14:16 ***/
+	public static final String STRING_URL_SIGNATURE_TRASLADO = "http://10.216.4.32/";
+	            
+   //public static final String STRING_WS_AREA   ="PRD-BOLGMO";
+	public static final String STRING_WS_AREA   ="QA-BOLGMO";
+	
+   //public static final String STRING_WS_AREA_NC   ="PRD-NCBOLGMO";
+	public static final String STRING_WS_AREA_NC   ="NC-GMO";	
+	
+	
+	/*** URL AMBIENTES DEL SIGNATURE ****/
+	/* AMBIENTE DE PRODUCCION*/
+	//public static final String STRING_URL_SIGNATURE = "http://10.216.4.16/";
+	
+	/* AMBIENTE DE PRUEBAS (QA)*/
+	public static final String STRING_URL_SIGNATURE = "http://10.216.4.24/";
+	
+Clase:  NewConstantes.java
+
+/*** DIR_SIGNATURE_TRASLADO EN PRODUCCION ***/
+	//public static final String STRING_URL_SIGNATURE_TRASLADO = "http://10.216.4.9/PDF/";
+	
+	/*** DIR_SIGNATURE_TRASLADO EN QA - Cambio de ruta para archivos de encargo PDH Melquisedeth SOTO melquisedeth.soto@vision.cr Mar 08/02/2022 14:16 ***/
+	public static final String STRING_URL_SIGNATURE_TRASLADO = "http://10.216.4.32/";
+	
+	
+	config.properties
+	
+	#liberacion.ruta    = /mnt/LuxNAS/INV_0204_GMO_POS_CreateWO/
+	#liberacion.rutares = /mnt/LuxNAS/RES_ARCH_POS/
+	
+	
+	# 08.02.2022   Cambio solicitado por Melquisedeth SOTO 
+	liberacion.ruta    = /INV_0204_GMO_POS_CreateWO/0204_QA/
+	liberacion.rutares = /mnt/LuxNAS/RES_ARCH_POS/
+	
+	
+16.02.2021 verilux CR, registro de datos suplementarios. 
+		   Key Word:  VERILUZ DATA SUPLEMENTO
+		   agrega_suplementos.js
+		   agrega_suplementos.jsp
+		   script de BD para configurar el producto, sus datos suplementarios y la obligatoriedad.
+		   Los atributos ya existian en BD Chile.
+		   
+17.02.2022 generacion de ticket mexico.
+           /PNMX/WebContent/jsp/venta/plantilla_mx_ticket.jsp
+           SeleccionPagoForm.java
+           SeleccionPagoDispatchActions.java
+            --> imprime_documento		
+            SeleccionPagoHelper
+            --> TraeBoleta
+            	--> setBoleta_total_descuento   
+		   	ProductosBean.java
+
+04.03.2022 
+			Key Word:  BUSCAR POR MAIL MX
+			busqueda_clientes.jsp		   	
+		   	SP_BUSCAR_SEL_CLIENTEMX 
+		   	---
+		   	Key word: MX NO PRESENTA GUIA
+		   	selecion_pago.jsp
+						--> javascript: confirmaNumeroDocumento()
+					selecion_pago.js
+						--> function confirmaNumeroDocumento() --> document.getElementById('accion').value = "valida_boleta";
+					SeleccionPagoDispatchActions
+							Constantes: public static final String STRING_VALIDA_BOLETA="valida_boleta";
+					                helper.validaDocumento
+					                helper.valida_Documento_General
+					                
+					SeleccionPagoHelper.validaDocumento
+								--> PosSeleccionPagoFacade.validaDocumento
+									--> SeleccionPagoDAOImpl.validaDocumento
+											--> SP_PAGO_SEL_VALIDA_DOCUMENTO
+											    PRODECIMIENTO AJUSTADO CON ENTRADA TIENDA:'MX'
+					
+					SeleccionPagoHelper.valida_Documento_General:  Análisis el método no requiere cambios.
+                -----------------------------------
+                --- SP_PAGO_SEL_VALIDA_DOCUMENTO	
+                -----------------------------------
+				--    MX NO PRESENTA GUIA
+				--
+				
+				IF(CODIGO_LOCAL= 'MX')THEN
+				     VALIDADO:= 1;
+				     RETURN ;
+				END IF;	   	
+		   	
+		   	
